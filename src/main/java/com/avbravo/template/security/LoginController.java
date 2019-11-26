@@ -256,6 +256,8 @@ RolServices rolServices;
     public String doLogin() {
         try {
 
+            System.out.println("sorteo"+JsfUtil.encriptar("sorteo"));
+            System.out.println("demo"+JsfUtil.encriptar("demo"));
             tokenwassend = false;
             userwasLoged = false;
             loggedIn = true;
