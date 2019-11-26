@@ -256,8 +256,7 @@ RolServices rolServices;
     public String doLogin() {
         try {
 
-            System.out.println("sorteo"+JsfUtil.encriptar("sorteo"));
-            System.out.println("demo"+JsfUtil.encriptar("demo"));
+           
             tokenwassend = false;
             userwasLoged = false;
             loggedIn = true;
@@ -327,20 +326,11 @@ RolServices rolServices;
                     //Notificaciones que tiene
                  
                    // validadorRoles.validarRoles(rol.getIdrol());
-                    System.out.println("=>>> rol.getIdrol"+rol.getIdrol());
+                   
                     switch (rol.getIdrol()) {
-                        case "DOCENTE":
-                            return "/faces/pages/solicituddocente/new.xhtml?faces-redirect=true";
-                        case "ADMINISTRATIVO":
-                            return "/faces/pages/solicitudadministrativo/new.xhtml?faces-redirect=true";
-                        case "COORDINADOR":
-                            return "/faces/pages/coordinador/list.xhtml?faces-redirect=true";
                         case "ADMINISTRADOR":
-                        case "SUBDIRECTORADMINISTRATIVO":
-                        case "SECRETARIA":
-             
-                        case "CONDUCTOR":
-                            System.out.println("voy al index....");
+                        
+                            
                             return "/faces/pages/index.xhtml?faces-redirect=true";
                         default:
                            JsfUtil.warningDialog(rf.getAppMessage("warning.view"), rf.getMessage("warning.rolnovalidadoenelmenu"));
