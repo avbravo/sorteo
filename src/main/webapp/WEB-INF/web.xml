@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+             <url-pattern>/javax.faces.resource/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            180
+        </session-timeout>
+    </session-config>
+   <welcome-file-list>
+        <welcome-file>faces/pages/index.xhtml</welcome-file>
+    </welcome-file-list>
+    
+     <!--
+    -->
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+           
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>css/fonts</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>otf</extension>
+        <mime-type>font/opentype</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>font/woff2</mime-type>
+    </mime-mapping>  
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>font/woff</mime-type>
+    </mime-mapping>  
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    
+    
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+<!--        <param-value>nova-light</param-value>
+        
+   
+        <param-value>nova-dark</param-value>
+         <param-value>nova-colored</param-value>
+      <param-value>luna-blue</param-value>
+        <param-value>luna-amber</param-value>
+        <param-value>luna-green</param-value>
+         <param-value>luna-pink</param-value>-->
+    <param-value>omega</param-value>
+
+    </context-param>
+    <!--
+JAVA EE 8 API SECURITY
+    -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Application pages</web-resource-name>
+            <url-pattern>/faces/pages/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMINISTRADOR</role-name>
+            <role-name>DOCENTE</role-name>
+            <role-name>CONDUCTOR</role-name>
+            <role-name>ADMINISTRATIVO</role-name>
+            <role-name>SECRETARIA</role-name>
+            <role-name>COORDINADOR</role-name>
+            <role-name>SUBDIRECTORADMINISTRATIVO</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+     
+    <security-role>
+        <role-name>ADMINISTRADOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>DOCENTE</role-name>
+    </security-role>
+    <security-role>
+        <role-name>CONDUCTOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ADMINISTRATIVO</role-name>
+    </security-role>
+    <security-role>
+        <role-name>SECRETARIA</role-name>
+    </security-role>
+    <security-role>
+        <role-name>COORDINADOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>SUBDIRECTORADMINISTRATIVO</role-name>
+    </security-role>
+    
+    <!--
+websocket
+    -->
+    <context-param>
+        <param-name>javax.faces.ENABLE_CDI_RESOLVER_CHAIN</param-name>
+        <param-value>true</param-value>
+    </context-param>    
+    <context-param>
+        <param-name>javax.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
+        <param-value>true</param-value>
+    </context-param>
+</web-app>
