@@ -30,15 +30,9 @@
 
                     <b:panelGrid id="panel" colSpans="2,10" size="xs" > 
 
-                        <p:outputLabel  value="#{msg['field.maximoparticipantes']} " />
-                        <p:outputLabel  value="#{applicationController.maximoparticipantes}" />
-                      
-                     
-                       
-                        <p:outputLabel  value="#{msg['field.maximopremios']}" />
-                        <p:outputLabel  value="#{applicationController.maximopremios}" />
-                     
-                    
+                      <h:form>
+        <h:commandButton value="throw an error" actionListener="#{errorBean.throwError}"/>
+    </h:form>
                       
 
                       <b:commandButton                           

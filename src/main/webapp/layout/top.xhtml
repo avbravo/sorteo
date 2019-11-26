@@ -33,15 +33,13 @@
 
 
 
-                    <b:navLink value="#{msg['menu.vehiculo']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/rol/list"  iconAwesome= "fa-car" />
+                  
                     <b:navLink value="#{msg['menu.iniciar']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/iniciar" 
                                iconAwesome= "fa-pencil-square-o" />
                     
                     <b:navLink value="#{msg['menu.configuracion']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion" 
                                iconAwesome= "fa-pencil-square-o" />
-                    <b:navLink value="#{msg['menu.resetear']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion" 
-                               iconAwesome= "fa-pencil-square-o" />
-
+                   
                 </b:dropMenu>
 
 
@@ -58,7 +56,7 @@
 
                 <b:dropMenu value="#{app['button.logout']}" >
 
-                    <b:navLink value="#{msg['menu.cambiarpassword']}"  outcome="/pages/rol/list" iconAwesome="fa-expeditedssl"  />
+                   
                     <h:form id="navbartopform">
                         <p:commandLink class="btnn btnn-primary login-btn" value="#{app['button.logout']}" action="#{loginController.doLogout()}"/>
                     </h:form>

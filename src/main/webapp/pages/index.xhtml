@@ -41,7 +41,7 @@
             <b:panel collapsible="false" >
                 <f:facet name="heading">
                     <i class="fa fa-battery-three-quarters" style="padding-right:20px" />
-                 
+
                     <b:commandButton                           
                         value="#{msg['button.jugar']}"
                         iconAwesome="fa-floppy-o"
@@ -52,57 +52,57 @@
                         update=":form" /> 
 
 
-                     <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['field.iniciado']}"  />
-                     <p:inputSwitch value="#{applicationController.iniciado}" disabled="true"/>
-                     <b:badge  style="size: 35px;margin-left:10px; background-color:#5cb85c" value="#{msg['field.maximopremios']} #{applicationController.maximopremios}"  />
-                            <b:badge style="margin-left:10px; background-color:#7f0055" value="#{msg['field.maximoparticipantes']} #{applicationController.maximoparticipantes}"  />
-                   
+                    <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['field.iniciado']}"  />
+                    <p:inputSwitch value="#{applicationController.iniciado}" disabled="true"/>
+                    <b:badge  style="size: 35px;margin-left:10px; background-color:#5cb85c" value="#{msg['field.maximopremios']} #{applicationController.maximopremios}"  />
+                    <b:badge style="margin-left:10px; background-color:#7f0055" value="#{msg['field.maximoparticipantes']} #{applicationController.maximoparticipantes}"  />
+
                 </f:facet>
                 <b:row >
                     <p:repeat value="#{applicationController.disponiblesList}" var="car">
-                      
-                       <p:knob value="#{car}" max="#{car}"
-                                    disabled="true" 
-                                    height="80" width="80"
-                                    foregroundColor="green" backgroundColor="#00000"
-                                    />
+
+                        <p:knob value="#{car}" max="#{car}"
+                                disabled="true" 
+                                height="80" width="80"
+                                foregroundColor="green" backgroundColor="#00000"
+                                />
                     </p:repeat>
 
                 </b:row>
-                
+
             </b:panel>
-            
-            
-            
-            
+
+
+
+
 
             <b:panel collapsible="false" >
                 <f:facet name="heading">
                     <i class="fa fa-battery-three-quarters" style="padding-right:20px" />
                     <h:outputText value="#{msg['title.ganadores']}" />
                     <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['label.pendientes']} #{applicationController.pendientes()}"  />
-                   
+
                 </f:facet>
-               
- <b:row >
-     <p:repeat value="#{applicationController.ganadoresList}" var="car">
-                      
-                       <p:knob value="#{car}" max="#{car}"
-                                    disabled="true" 
-                                    height="80" width="80"
-                                    foregroundColor="red" backgroundColor="#00000"
-                                    />
+
+                <b:row >
+                    <p:repeat value="#{applicationController.ganadoresList}" var="car">
+
+                        <p:knob value="#{car}" max="#{car}"
+                                disabled="true" 
+                                height="80" width="80"
+                                foregroundColor="red" backgroundColor="#00000"
+                                />
                     </p:repeat>
 
                 </b:row>
-        
 
-               
 
-              
 
-              
-              
+
+
+
+
+
 
 
             </b:panel>
