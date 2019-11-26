@@ -51,11 +51,11 @@ Hint to editors: The menus follow the Chicago style of capitalization. Please ca
                 <b:navLink/>
                 
 
-                <b:navLink value="#{msg['menu.rol']}" rendered="#{p:ifGranted('ADMINISTRADOR')}"  outcome="/pages/rol/new" iconAwesome="fa-pencil-square-o"  />                   
+              
                 
-            <b:navLink value="#{msg['menu.disponibles']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SUBDIRECTORADMINISTRATIVO')}" outcome="/pages/rol/new" iconAwesome= "fa-calendar-o" />                                                                    
-                    <b:navLink value="#{msg['menu.rol']}" rendered="#{p:ifGranted('ADMINISTRADOR')}"  outcome="/pages/rol/new" iconAwesome="fa-pencil-square-o"  />                   
-
+       
+                     <b:navLink value="#{msg['menu.iniciar']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/iniciar" 
+                               iconAwesome= "fa-pencil-square-o" />
  <b:navLink value="#{msg['menu.configuracion']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion"  iconAwesome= "fa-pencil-square-o" />
 
 

@@ -26,7 +26,7 @@
                 </b:navbarLinks>
 
 
-               
+
 
 
                 <b:dropMenu value="#{msg['menubar.registros']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}">
@@ -34,21 +34,26 @@
 
 
                     <b:navLink value="#{msg['menu.vehiculo']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/rol/list"  iconAwesome= "fa-car" />
-                   <b:navLink value="#{msg['menu.configuracion']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion" 
-                              iconAwesome= "fa-pencil-square-o" />
+                    <b:navLink value="#{msg['menu.iniciar']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/iniciar" 
+                               iconAwesome= "fa-pencil-square-o" />
                     
+                    <b:navLink value="#{msg['menu.configuracion']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion" 
+                               iconAwesome= "fa-pencil-square-o" />
+                    <b:navLink value="#{msg['menu.resetear']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion" 
+                               iconAwesome= "fa-pencil-square-o" />
+
                 </b:dropMenu>
 
 
 
-               
+
 
 
 
                 <b:navLink />
                 <b:navLink />
 
-               
+
 
 
                 <b:dropMenu value="#{app['button.logout']}" >

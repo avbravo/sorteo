@@ -41,146 +41,73 @@
             <b:panel collapsible="false" >
                 <f:facet name="heading">
                     <i class="fa fa-battery-three-quarters" style="padding-right:20px" />
-                    <p:commandButton                           
-                                         value="#{app['button.save']}"
-                                         iconAwesome="fa-floppy-o"
-                                         title="#{app['button.save']}"
-                                         look="primary"
-                                         action="#{configuracionController.saveConfiguration()}"
-                                         update=":form" > 
+                 
+                    <b:commandButton                           
+                        value="#{msg['button.jugar']}"
+                        iconAwesome="fa-floppy-o"
+                        title="#{msg['button.jugar']}"
+                        disabled="#{!applicationController.iniciado}"
+                        look="primary"
+                        action="#{applicationController.jugar()}"
+                        update=":form" /> 
 
 
-                        </p:commandButton>
+                     <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['field.iniciado']}"  />
+                     <p:inputSwitch value="#{applicationController.iniciado}" disabled="true"/>
+                     <b:badge  style="size: 35px;margin-left:10px; background-color:#5cb85c" value="#{msg['field.maximopremios']} #{applicationController.maximopremios}"  />
+                            <b:badge style="margin-left:10px; background-color:#7f0055" value="#{msg['field.maximoparticipantes']} #{applicationController.maximoparticipantes}"  />
+                   
                 </f:facet>
+                <b:row >
+                    <p:repeat value="#{applicationController.disponiblesList}" var="car">
+                      
+                       <p:knob value="#{car}" max="#{car}"
+                                    disabled="true" 
+                                    height="80" width="80"
+                                    foregroundColor="green" backgroundColor="#00000"
+                                    />
+                    </p:repeat>
+
+                </b:row>
+                
             </b:panel>
+            
+            
+            
+            
 
             <b:panel collapsible="false" >
                 <f:facet name="heading">
                     <i class="fa fa-battery-three-quarters" style="padding-right:20px" />
-                    <h:outputText value="#{msg['title.solicitudes']}" />
-                    <b:badge rendered="#{dashboardIndexController.totalSolicitado == 0} " style="margin-left:10px; background-color:#5cb85c" value="#{msg['label.sinsolicitudes']}"  />
-                    <b:badge rendered="#{dashboardIndexController.totalSolicitado > 0}" style="margin-left:10px; background-color:#7f0055" value="#{msg['label.pendientes']}"  />
+                    <h:outputText value="#{msg['title.ganadores']}" />
+                    <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['label.pendientes']} #{applicationController.pendientes()}"  />
+                   
                 </f:facet>
-                <b:row rendered="#{p:ifAnyGranted('COORDINADOR,SUBDIRECTORADMINISTRATIVO')}">
-                    <b:column span="12">
-                       <p:outputLabel value="#{msg['label.vistobueno']}"/>
-                    </b:column>
-                </b:row>
-                <b:row rendered="#{p:ifAnyGranted('COORDINADOR,SUBDIRECTORADMINISTRATIVO')}">
-
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.pendiente']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totalVistoBuenoPendiente}" max="#{dashboardIndexController.totalVistoBuenoPendiente}"
+               
+ <b:row >
+     <p:repeat value="#{applicationController.ganadoresList}" var="car">
+                      
+                       <p:knob value="#{car}" max="#{car}"
                                     disabled="true" 
-                                    height="70" width="70"
+                                    height="80" width="80"
                                     foregroundColor="red" backgroundColor="#00000"
                                     />
-                        </div>
-                    </b:column>
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.aprobado']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totalVistoBuenoAprobado}" max="#{dashboardIndexController.totalVistoBuenoAprobado}"
-                                    disabled="true" 
-                                    height="70" width="70"
-                                    foregroundColor="green" backgroundColor="#00000"
-                                    />
-                        </div>
-                    </b:column>
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.cancelado']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totalVistoBuenoCancelado}" max="#{dashboardIndexController.totalVistoBuenoCancelado}"
-                                    disabled="true" 
-                                    height="70" width="70"
-                                    foregroundColor="black" backgroundColor="#00000"
-                                    />
-                        </div>
-                    </b:column>
-                </b:row>
-                
-                  <b:row rendered="#{p:ifAnyGranted('COORDINADOR,SUBDIRECTORADMINISTRATIVO')}">
-                    <b:column span="6">
-                        <p:chart id="totalporvistobueno" widgetVar="chartTotalVistoBueno"
-                                 type="pie" model="#{dashboardIndexController.pieModelVistoBueno}"  />
-                    </b:column>
-                </b:row>
-                
-                
-                  <b:row >
-                    <b:column span="12">
-                       <p:outputLabel value="#{msg['label.solicitudes']}"/>
-                    </b:column>
-                </b:row>
-                
-                <b:row>
+                    </p:repeat>
 
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.totalsolicitado']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totalSolicitado}" max="#{dashboardIndexController.totalSolicitado}"
-                                    disabled="true" 
-                                    height="70" width="70"
-                                    foregroundColor="black" backgroundColor="#00000"
-                                    />
-                        </div>
-                    </b:column>
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.totalaprobado']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totalAprobado}" max="#{dashboardIndexController.totalAprobado}"
-                                    disabled="true"
-                                    height="70" width="70"
-                                    foregroundColor="green" backgroundColor="#00000"
-                                    />
-                        </div>
-                    </b:column>
-
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.totalrechazado']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totalRechazado}" max="#{dashboardIndexController.totalRechazado}"
-                                    disabled="true"
-                                    height="70" width="70"
-                                    foregroundColor="red" backgroundColor="#00000"
-                                    />
-                        </div>
-                    </b:column>
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.totalcancelado']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totalCancelado}" max="#{dashboardIndexController.totalCancelado}"
-                                    disabled="true"
-                                    height="70" width="70"
-                                    foregroundColor="blue" backgroundColor="#00000"
-                                    />
-                        </div>
-                    </b:column>
-
-
-                    <b:column span="2">
-                        <h5><p:outputLabel value="#{msg['label.totales']}"/></h5>
-                        <div class="knob-container  ui-corner-all">
-                            <p:knob value="#{dashboardIndexController.totales}" max="#{dashboardIndexController.totales}"
-                                    disabled="true"
-                                    height="70" width="70"
-                                    foregroundColor="brown" backgroundColor="#00000"
-                                    />
-                        </div>
-                    </b:column>
                 </b:row>
-                <b:row>
-                    <b:column span="6">
-                        <p:chart id="totalporsolicitud" widgetVar="chartTotal"
-                                 type="pie" model="#{dashboardIndexController.pieModelSolicitud}"  />
-                    </b:column>
-                </b:row>
+        
+
+               
+
+              
+
+              
+              
 
 
             </b:panel>
 
-     
+
         </b:form>
 
         <jmoordbjsf:denegado rendered="#{!loginController.loggedIn}" />

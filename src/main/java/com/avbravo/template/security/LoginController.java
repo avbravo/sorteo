@@ -442,7 +442,7 @@ RolServices rolServices;
 // <editor-fold defaultstate="collapsed" desc="doLogout">
 
     public String doLogout() {
-        return logout("/template/faces/login.xhtml?faces-redirect=true");
+        return logout("/sorteo/faces/login.xhtml?faces-redirect=true");
     }
 
     // </editor-fold>
