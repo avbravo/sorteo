@@ -48,7 +48,20 @@
                         look="primary"
                         action="#{applicationController.iniciar()}"
                         update=":form" /> 
-                    </b:panelGrid>                    
+                      
+                      
+                       
+                      
+                    </b:panelGrid>     
+                    <div class="ui-g">
+    
+    
+    
+    <div class="ui-g-12 ui-md-12">
+        <p:staticMessage  severity="fatal" summary="" detail="#{msg['field.mensajealiniciar']}" />
+    </div>
+
+                       </div>
                 </b:panel>
             </h:panelGroup>
         </b:form>

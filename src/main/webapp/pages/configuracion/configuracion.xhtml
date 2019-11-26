@@ -52,6 +52,12 @@
                         </p:commandButton>
                     </b:panelGrid>                    
                 </b:panel>
+                <div class="ui-g-12 ui-md-12">
+        <p:staticMessage  severity="fatal" summary="" detail="#{msg['field.mensajeconfiguracion']}" />
+    </div>
+                <div class="ui-g-12 ui-md-12">
+        <p:staticMessage  severity="info" summary="" detail="#{msg['field.mensajeconfiguracionayuda']}" />
+    </div>
             </h:panelGroup>
         </b:form>
         <jmoordbjsf:denegado rendered="#{!p:ifGranted('ADMINISTRADOR')}" />
