@@ -25,10 +25,19 @@ import javax.inject.Named;
 public class ApplicationController implements Serializable {
 
     private Boolean iniciado = false;
-    private Integer maximoparticipantes = 25;
+    private Integer maximoparticipantes = 65;
     private Integer maximopremios = 4;
     private List<Integer> disponiblesList = new ArrayList<>();
     private List<Integer> ganadoresList = new ArrayList<>();
+    Integer numeroGenerado = 0;
+
+    public Integer getNumeroGenerado() {
+        return numeroGenerado;
+    }
+
+    public void setNumeroGenerado(Integer numeroGenerado) {
+        this.numeroGenerado = numeroGenerado;
+    }
 
     public Boolean getIniciado() {
         return iniciado;
@@ -61,6 +70,7 @@ public class ApplicationController implements Serializable {
      * @return
      */
     public String iniciar() {
+        numeroGenerado = 0;
         disponiblesList = new ArrayList<>();
         ganadoresList = new ArrayList<>();
         try {
@@ -74,18 +84,36 @@ public class ApplicationController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorDialog("generarListaNumeros()", e.getLocalizedMessage());
         }
-        return "";
+        return "/faces/pages/index";
     }
     // </editor-fold>
 
+    public String goIniciar() {
+        return "/faces/pages/configuracion/iniciar";
+    }
+
     public String jugar() {
+        Integer numero = 5526;
+        int millares = 0, centenas = 0, decenas = 0, unidades = 0;
+        //Saco los millares
+        millares = (int) (numero / 1000);
+//saco las centenas
+        if (numero % 1000 != 0) {
+            centenas = (int) (numero % 1000 / 100);
+        }
+//saco las decenas
+        if (numero % 100 != 0) {
+            decenas = (int) (numero % 1000 / 10);
+        }
+
         Integer number = 0;
         Boolean continuar = true;
         Boolean found = false;
         Integer gen = 0;
-        if(ganadoresList.size() == maximopremios){
-            JsfUtil.warningDialog("jugar","Se termino el juego");
-            iniciado=false;
+        if (ganadoresList.size() == maximopremios) {
+            JsfUtil.warningDialog("jugar", "El juego ya finalizo");
+            //  iniciado = false;
+            return "";
         }
         try {
             while (continuar) {
@@ -108,12 +136,15 @@ public class ApplicationController implements Serializable {
                 }
 
             }
-            disponiblesList.remove(gen);
+            numeroGenerado = gen;
+            // disponiblesList.remove(gen);
             ganadoresList.add(gen);
- if(ganadoresList.size() == maximopremios){
-            JsfUtil.warningDialog("jugar","Se termino el juego");
-            iniciado=false;
-        }
+            if (ganadoresList.size() == maximopremios) {
+                JsfUtil.warningDialog("jugar", "Se termino el juego");
+                // iniciado = false;
+            } else {
+                JsfUtil.successMessage("Numero " + gen);
+            }
         } catch (Exception e) {
             JsfUtil.errorMessage("jugar()" + e.getLocalizedMessage());
         }
@@ -163,4 +194,38 @@ public class ApplicationController implements Serializable {
 
     }
 
+    public String columnColor(Integer number) {
+        String color = "green";
+        try {
+            for (Integer n : ganadoresList) {
+                if (number.equals(n)) {
+                    color = "brown";
+                }
+            }
+
+        } catch (Exception e) {
+            JsfUtil.errorDialog("columnColor", e.getLocalizedMessage());
+        }
+        return color;
+    }
+
+    public Boolean isSeguirJugando() {
+        return ganadoresList.size() == maximopremios;
+    }
+
+    public String reiniciarParticipantes(Integer sizeOld) {
+
+        try {
+
+            for (int i = sizeOld + 1; i <= maximoparticipantes; i++) {
+                disponiblesList.add(new Integer(i));
+
+            }
+            JsfUtil.infoDialog("Mensaje", "Se preparo el entorno para jugar");
+
+        } catch (Exception e) {
+            JsfUtil.errorDialog("reiniciarParticipantes()", e.getLocalizedMessage());
+        }
+        return "";
+    }
 }

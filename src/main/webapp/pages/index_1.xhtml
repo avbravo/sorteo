@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition template="/layout/template.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:jmoordbjsf="http://jmoordbjsf.com/taglib"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+
+        <style>
+            .thumbnail { max-width: 100%; }
+            img.thumbnail:hover, img.thumbnail:focus {
+                border: 1px solid;
+                border-color: #428BCA;
+            }
+        </style>
+
+
+
+        <b:form id="form" rendered="#{loginController.loggedIn}"  >
+            <h1>#{msg['application.title']}</h1>
+
+            <hr/>
+<!--            <p>#{msg['label.sistematransporte']}</p>
+            <p>#{msg['label.solicitudes']}</p>-->
+
+
+
+
+
+
+            <hr/>
+            <div id="websocketid"></div>
+
+        <b:panel collapsible="false" >
+                <f:facet name="heading">
+                    <i class="fa fa-battery-three-quarters" style="padding-right:20px" />
+
+                    <b:commandButton                           
+                        value="#{msg['button.jugar']}"
+                        iconAwesome="fa-floppy-o"
+                        title="#{msg['button.jugar']}"
+                        disabled="#{!applicationController.iniciado}"
+                        look="primary"
+                        action="#{applicationController.jugar()}"
+                        update=":form" /> 
+
+
+                    <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['field.iniciado']}"  />
+                    <p:inputSwitch value="#{applicationController.iniciado}" disabled="true"/>
+                    <b:badge  style="size: 35px;margin-left:10px; background-color:#5cb85c" value="#{msg['field.maximopremios']} #{applicationController.maximopremios}"  />
+                    <b:badge style="margin-left:10px; background-color:#7f0055" value="#{msg['field.maximoparticipantes']} #{applicationController.maximoparticipantes}"  />
+
+                </f:facet>
+                <b:row >
+                   
+
+                    <p:knob value="#{applicationController.numeroGenerado}" max="#{applicationController.numeroGenerado}"
+                                disabled="true" 
+                                height="180" width="180"
+                                foregroundColor="brown" backgroundColor="#00000"
+                                />
+                    
+
+                </b:row>
+
+            </b:panel>
+            
+                     <b:panel collapsible="false" >
+                <f:facet name="heading">
+                    <i class="fa fa-battery-three-quarters" style="padding-right:20px" />
+                    <h:outputText value="#{msg['title.ganadores']}" />
+                    <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['label.pendientes']} #{applicationController.pendientes()}"  />
+
+                </f:facet>
+
+                <b:row >
+                    <p:repeat value="#{applicationController.ganadoresList}" var="car">
+
+                        <p:knob value="#{car}" max="#{car}"
+                                disabled="true" 
+                                height="80" width="80"
+                                foregroundColor="brown" backgroundColor="#00000"
+                                />
+                    </p:repeat>
+
+                </b:row>
+
+
+
+
+
+
+
+
+
+
+            </b:panel>
+
+            <b:panel collapsible="false" >
+                <f:facet name="heading">
+                    <i class="fa fa-battery-three-quarters" style="padding-right:20px" />
+
+                   
+                    <b:badge  style="margin-left:10px; background-color:#5cb85c" value="#{msg['field.disponibles']}"  />
+                   
+                </f:facet>
+                <b:row >
+                    <p:repeat value="#{applicationController.disponiblesList}" var="car">
+
+                        <p:knob value="#{car}" max="#{car}"
+                                disabled="true" 
+                                height="80" width="80"
+                                foregroundColor="green" backgroundColor="#00000"
+                                />
+                    </p:repeat>
+
+                </b:row>
+
+            </b:panel>
+
+
+
+
+
+   
+
+
+        </b:form>
+
+        <jmoordbjsf:denegado rendered="#{!loginController.loggedIn}" />
+        <br/><br/><br/>
+    </ui:define>
+</ui:composition>

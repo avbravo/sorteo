@@ -32,12 +32,16 @@
                 <b:dropMenu value="#{msg['menubar.registros']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}">
 
 
-
+ <b:navLink outcome="/pages/index" value="#{msg['menubar.home']}" iconAwesome="home" />
                   
                     <b:navLink value="#{msg['menu.iniciar']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/iniciar" 
                                iconAwesome= "fa-pencil-square-o" />
                     
                     <b:navLink value="#{msg['menu.configuracion']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion" 
+                               iconAwesome= "fa-pencil-square-o" />
+                    <b:navLink value="#{msg['menu.cambiarpremios']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/cambiarpremios" 
+                               iconAwesome= "fa-pencil-square-o" />
+                    <b:navLink value="#{msg['menu.cambiarparticipantes']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/cambiarparticipantes" 
                                iconAwesome= "fa-pencil-square-o" />
                    
                 </b:dropMenu>
