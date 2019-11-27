@@ -9,7 +9,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jmoordbjsf="http://jmoordbjsf.com/taglib"> 
     <ui:define name="content">
-         
+
 
         <style>
             .thumbnail { max-width: 100%; }
@@ -21,49 +21,62 @@
 
 
         <b:form id="form"  prependId="false"  rendered="#{p:ifGranted('ADMINISTRADOR')}" onkeypress="if (event.keyCode == 13) {
-                     return false;
-                 }">
+                    return false;
+                }">
             <h:panelGroup id="content" layout="block"> 
 
-              <p:growl id="growl"/>
-                <b:panel collapsible="false" title="#{msg['title.iniciar']}" look="primary">
+                <p:growl id="growl"/>
+                <b:panel collapsible="false" title="#{msg['title.configuracion']}" look="primary">
 
-                    <b:panelGrid id="panel" colSpans="2,10" size="xs" > 
+                    <b:panelGrid id="panelConfiguracion" colSpans="2,10" size="xs" > 
 
-                        <p:outputLabel  value="#{msg['field.maximoparticipantes']} " />
-                        <p:outputLabel  value="#{applicationController.maximoparticipantes}" />
-                      
-                     
-                       
+                        <p:outputLabel  value="#{msg['field.maximoparticipantes']}" />
+                        <p:inputText value="#{configuracionController.varmaximoparticipantes}"/>
+
+
                         <p:outputLabel  value="#{msg['field.maximopremios']}" />
-                        <p:outputLabel  value="#{applicationController.maximopremios}" />
-                     
+                        <p:inputText value="#{configuracionController.varmaximopremios}"/>
+
+
+
+
                     
-                      
+                        
+                         <p:commandButton value="#{msg['button.start']}" 
 
-                      <b:commandButton                           
-                        value="#{msg['button.start']}"
-                        iconAwesome="fa-floppy-o"
-                        title="#{msg['button.start']}"
-                        look="primary"
-                        action="#{applicationController.iniciar()}"
-                        update=":form" /> 
-                      
-                      
-                       
-                      
-                    </b:panelGrid>     
-                    <div class="ui-g">
-    
-    
-    
-    <div class="ui-g-12 ui-md-12">
-        <p:staticMessage  severity="fatal" summary="" detail="#{msg['field.mensajealiniciar']}" />
-    </div>
+                                         icon="fa fa-floppy-o"
+                                         title="#{msg['button.start']}"
+                                         action="#{configuracionController.saveConfiguration()}"
+                                         update=":form" >
+                            <p:confirm header="#{msg['info.doyouwantiniciar']}"
+                                       message="#{msg['field.mensajealiniciar']}" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
 
-                       </div>
+                    </b:panelGrid>    
+                  <div class="ui-g">
+
+
+
+                        <div class="ui-g-12 ui-md-12">
+                            <p:staticMessage  severity="fatal" summary="" detail="#{msg['field.mensajealiniciar']}" />
+                        </div>
+
+                    </div>
                 </b:panel>
+
+
+
+
+
+
             </h:panelGroup>
+
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="#{app['button.yes']}"  type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="#{app['button.no']}"  type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>  
+
         </b:form>
         <jmoordbjsf:denegado rendered="#{!p:ifGranted('ADMINISTRADOR')}" />
         <br/><br/><br/>

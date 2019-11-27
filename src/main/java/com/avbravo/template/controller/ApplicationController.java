@@ -84,7 +84,8 @@ public class ApplicationController implements Serializable {
         } catch (Exception e) {
             JsfUtil.errorDialog("generarListaNumeros()", e.getLocalizedMessage());
         }
-        return "/faces/pages/index";
+        return "";
+//        return "/faces/pages/index";
     }
     // </editor-fold>
 
@@ -98,14 +99,14 @@ public class ApplicationController implements Serializable {
                 JsfUtil.warningDialog("Advertencia", "La lista de ganadores esta vacia");
                 return "";
             }
-            System.out.println("size() "+ganadoresList.size());
+            System.out.println("size() " + ganadoresList.size());
             ganadoresList.remove(numeroGenerado);
-            System.out.println("remove-->size() "+ganadoresList.size());
-            numeroGenerado=0;
+            System.out.println("remove-->size() " + ganadoresList.size());
+            numeroGenerado = 0;
             JsfUtil.infoDialog("Removido", "Se removio el ultimo premio jugado");
-                return "";
+            return "";
         } catch (Exception e) {
-            JsfUtil.errorDialog("rechazar()" , e.getLocalizedMessage());
+            JsfUtil.errorDialog("rechazar()", e.getLocalizedMessage());
         }
         return "";
     }

@@ -83,7 +83,8 @@ public class ConfiguracionController implements Serializable {
             }
             applicationController.setMaximopremios(varmaximopremios);
             applicationController.setMaximoparticipantes(varmaximoparticipantes);
-            JsfUtil.infoDialog("Guardado", "Se guardo la configuracion");
+            applicationController.iniciar();
+            JsfUtil.infoDialog("Guardado", "Se guardo la configuracion y se limpio todos los datos");
         } catch (Exception e) {
             JsfUtil.errorDialog("saveConfiguracion()", e.getLocalizedMessage());
         }

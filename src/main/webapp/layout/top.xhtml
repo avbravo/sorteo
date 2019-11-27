@@ -35,10 +35,9 @@
                     <b:navLink outcome="/pages/index" value="#{msg['menubar.home']}" iconAwesome="home" />
 
                     <b:navLink value="#{msg['menu.iniciar']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/iniciar" 
-                               iconAwesome= "fa-key" />
+                               iconAwesome=  "fa-wrench" />
 
-                    <b:navLink value="#{msg['menu.configuracion']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/configuracion" 
-                               iconAwesome= "fa-wrench" />
+
                     <b:navLink value="#{msg['menu.cambiarpremios']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/cambiarpremios" 
                                iconAwesome= "fa-bicycle" />
                     <b:navLink value="#{msg['menu.cambiarparticipantes']}" rendered="#{p:ifAnyGranted('ADMINISTRADOR, SECRETARIA')}"  outcome="/pages/configuracion/cambiarparticipantes" 
