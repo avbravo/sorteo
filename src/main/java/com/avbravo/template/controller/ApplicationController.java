@@ -92,19 +92,25 @@ public class ApplicationController implements Serializable {
         return "/faces/pages/configuracion/iniciar";
     }
 
+    public String rechazar() {
+        try {
+            if (ganadoresList == null || ganadoresList.isEmpty()) {
+                JsfUtil.warningDialog("Advertencia", "La lista de ganadores esta vacia");
+                return "";
+            }
+            System.out.println("size() "+ganadoresList.size());
+            ganadoresList.remove(numeroGenerado);
+            System.out.println("remove-->size() "+ganadoresList.size());
+            numeroGenerado=0;
+            JsfUtil.infoDialog("Removido", "Se removio el ultimo premio jugado");
+                return "";
+        } catch (Exception e) {
+            JsfUtil.errorDialog("rechazar()" , e.getLocalizedMessage());
+        }
+        return "";
+    }
+
     public String jugar() {
-        Integer numero = 5526;
-        int millares = 0, centenas = 0, decenas = 0, unidades = 0;
-        //Saco los millares
-        millares = (int) (numero / 1000);
-//saco las centenas
-        if (numero % 1000 != 0) {
-            centenas = (int) (numero % 1000 / 100);
-        }
-//saco las decenas
-        if (numero % 100 != 0) {
-            decenas = (int) (numero % 1000 / 10);
-        }
 
         Integer number = 0;
         Boolean continuar = true;
@@ -112,7 +118,6 @@ public class ApplicationController implements Serializable {
         Integer gen = 0;
         if (ganadoresList.size() == maximopremios) {
             JsfUtil.warningDialog("jugar", "El juego ya finalizo");
-            //  iniciado = false;
             return "";
         }
         try {
