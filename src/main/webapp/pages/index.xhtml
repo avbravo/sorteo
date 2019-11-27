@@ -25,8 +25,7 @@
             <h1>#{msg['application.title']}</h1>
 
             <hr/>
-<!--            <p>#{msg['label.sistematransporte']}</p>
-            <p>#{msg['label.solicitudes']}</p>-->
+
 
             <p:growl id="growl" life="250"/>
 
@@ -46,20 +45,7 @@
 
                 </f:facet>
                 <b:row >
-
-
-
-                    <b:commandButton                           
-                        value="#{msg['button.irainiciar']}"
-                        iconAwesome="fa-bullhorn"
-                        title="#{msg['button.irainiciar']}"
-
-                        look="success"
-                        rendered="#{!applicationController.iniciado}"
-                        action="#{applicationController.goIniciar()}"
-                        update=":form" />
-
-
+     
                     <b:commandButton                           
                         value="#{msg['button.jugar']}"
                         iconAwesome="fa-money"
@@ -69,15 +55,65 @@
                         rendered="#{applicationController.iniciado}"
                         action="#{applicationController.jugar()}"
                         update=":form" /> 
+                  
 
-                    <p:knob value="#{applicationController.numeroGenerado}" max="#{applicationController.numeroGenerado}"
+
+                
+                           <p:knob value="#{applicationController.numeroGenerado}" max="#{applicationController.numeroGenerado}"
                             disabled="true" 
                             height="180" width="180"
                             rendered="#{applicationController.iniciado}"
                             foregroundColor="brown" backgroundColor="#00000"
                             />
 
-                    <p:commandButton value="#{msg['button.rechazarultimo']}" 
+                  
+
+
+                 
+                   
+
+
+                   
+                </b:row>
+                <b:row>
+                   
+                   
+                  
+
+                    <b:column span="2" rendered="#{applicationController.iniciado}">
+                        <h5><p:outputLabel value="#{msg['label.pendientes']}"/></h5>
+                        <div class="knob-container  ui-corner-all">
+                            <p:knob value="#{applicationController.numerosPendientes}" max="#{applicationController.numerosPendientes}"
+                                    disabled="true" 
+                                    
+                                    height="56" width="56"
+                                    foregroundColor="red" backgroundColor="#00000"
+                                    />
+                        </div>
+                    </b:column>
+                    <b:column span="2" rendered="#{applicationController.iniciado}">
+                        <h5><p:outputLabel value="#{msg['field.maximopremios']}"/></h5>
+                        <div class="knob-container  ui-corner-all">
+                            <p:knob value="#{applicationController.maximopremios}" max="#{applicationController.maximopremios}"
+                                    disabled="true" 
+                                    height="56" width="56"
+                                    foregroundColor="red" backgroundColor="#00000"
+                                    />
+                        </div>
+                    </b:column>
+                    <b:column span="2" rendered="#{applicationController.iniciado}">
+                        <h5><p:outputLabel value="#{msg['field.maximoparticipantes']}"/></h5>
+                        <div class="knob-container  ui-corner-all">
+                            <p:knob value="#{applicationController.maximoparticipantes}" max="#{applicationController.maximoparticipantes}"
+                                    disabled="true" 
+                                    height="56" width="56"
+                                    foregroundColor="red" backgroundColor="#00000"
+                                    />
+                        </div>
+                    </b:column>
+                    
+                      <b:column span="4" rendered="#{applicationController.iniciado}">
+                         <p:commandButton value="#{msg['button.rechazarultimo']}" 
 
                                      rendered="#{applicationController.iniciado}"
                                      action="#{applicationController.rechazar()}"
@@ -85,25 +121,30 @@
                         <p:confirm header="#{app['info.doyouwantdelete']}"
                                    message="#{app['info.doyouwantdelete']}" icon="pi pi-exclamation-triangle" />
                     </p:commandButton>
+                    </b:column>
+                    
+                      <b:column span="2" rendered="#{!applicationController.iniciado}">
+                         <b:commandButton                           
+                        value="#{msg['button.irainiciar']}"
+                        iconAwesome="fa-bullhorn"
+                        title="#{msg['button.irainiciar']}"
 
+                        look="success"
+                        rendered="#{!applicationController.iniciado}"
+                        action="#{applicationController.goIniciar()}"
+                        update=":form" />
 
-                    <div class="ui-g">
-                        <div class="ui-g-12 ui-md-3">
-                            <p:staticMessage  rendered="#{applicationController.iniciado}" severity="info" summary="#{msg['field.pendientes']}" detail="#{applicationController.pendientes()}" />
-                        </div>
-                        <div class="ui-g-12 ui-md-3">
-                            <p:staticMessage rendered="#{applicationController.iniciado}" severity="warn" summary="" detail="#{msg['field.maximopremios']} #{applicationController.maximopremios}" />
-                        </div>
-                        <div class="ui-g-12 ui-md-3">
-                            <p:staticMessage rendered="#{applicationController.iniciado}" severity="warn" summary="" detail="#{msg['field.maximoparticipantes']} #{applicationController.maximoparticipantes}" />
-                        </div>
-
-                        <div class="ui-g-12 ui-md-3">
-                            <p:staticMessage rendered="#{!applicationController.iniciado}" severity="fatal" summary="" detail="#{msg['field.debeiniciarprimero']}" />
-                        </div>
-                    </div>
+                    </b:column>
+                    <b:column span="10" rendered="#{!applicationController.iniciado}">
+                       
+                            <p:staticMessage  severity="fatal" summary="" detail="#{msg['field.debeiniciarprimero']}" />
+                      
+                       
+                      
+                    </b:column>
                 </b:row>
-
+                
+                
             </b:panel>
 
 

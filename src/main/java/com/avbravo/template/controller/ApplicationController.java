@@ -23,7 +23,7 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class ApplicationController implements Serializable {
-
+private Integer numerosPendientes =0;
     private Boolean iniciado = false;
     private Integer maximoparticipantes = 65;
     private Integer maximopremios = 4;
@@ -31,6 +31,17 @@ public class ApplicationController implements Serializable {
     private List<Integer> ganadoresList = new ArrayList<>();
     Integer numeroGenerado = 0;
 
+    public Integer getNumerosPendientes() {
+        return pendientes();
+        //return numerosPendientes;
+    }
+
+    public void setNumerosPendientes(Integer numerosPendientes) {
+        this.numerosPendientes = numerosPendientes;
+    }
+
+    
+    
     public Integer getNumeroGenerado() {
         return numeroGenerado;
     }
@@ -99,7 +110,11 @@ public class ApplicationController implements Serializable {
                 JsfUtil.warningDialog("Advertencia", "La lista de ganadores esta vacia");
                 return "";
             }
-            System.out.println("size() " + ganadoresList.size());
+            ganadoresList.forEach((n) -> {
+                numeroGenerado =n;
+            });
+//            System.out.println("size() " + ganadoresList.size());
+          //  numeroGenerado = ganadoresList.get(ganadoresList.size());
             ganadoresList.remove(numeroGenerado);
             System.out.println("remove-->size() " + ganadoresList.size());
             numeroGenerado = 0;
@@ -159,7 +174,9 @@ public class ApplicationController implements Serializable {
 
     public Integer pendientes() {
         try {
-
+if(ganadoresList == null || ganadoresList.isEmpty()){
+    return maximopremios;
+}
             return maximopremios - ganadoresList.size();
         } catch (Exception e) {
         }
