@@ -8,9 +8,12 @@ package com.avbravo.template.controller;
 import com.avbravo.jmoordbutils.JsfUtil;
 import com.avbravo.template.entity.Decenas;
 import java.io.Serializable;
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
@@ -114,32 +117,32 @@ public class ApplicationController implements Serializable {
             }
             Integer numeroAleatorio = 0;
             Boolean seguir = true;
-            Boolean found=false;
+            Boolean found = false;
             for (int i = 1; i <= maximoparticipantes; i++) {
-                seguir=true;
+                seguir = true;
                 while (seguir) {
                     numeroAleatorio = JsfUtil.getRandomNumber(1, maximoparticipantes);
                     if (aleatoriosList == null || aleatoriosList.isEmpty()) {
                         aleatoriosList.add(numeroAleatorio);
-                        seguir=false;
+                        seguir = false;
                     } else {
-                        found=false;
+                        found = false;
                         for (Integer n : aleatoriosList) {
-                             if(n.equals(numeroAleatorio)){
-                                 found=true;
-                             }
+                            if (n.equals(numeroAleatorio)) {
+                                found = true;
+                            }
                         }
-                        if(!found){
-                             aleatoriosList.add(numeroAleatorio);
-                             seguir=false;
+                        if (!found) {
+                            aleatoriosList.add(numeroAleatorio);
+                            seguir = false;
                         }
                     }
                 }
 
             }
             System.out.println("=============aleatorios==========");
-            for(Integer i:aleatoriosList){
-                System.out.print( i+ " ");
+            for (Integer i : aleatoriosList) {
+                System.out.print(i + " ");
             }
 
             JsfUtil.infoDialog("Mensaje", "Se preparo el entorno para jugar");
@@ -194,6 +197,7 @@ public class ApplicationController implements Serializable {
         }
         try {
             while (continuar) {
+                paseDecena++;
 
                 gen = JsfUtil.getRandomNumber(1, maximoparticipantes);
                 if (ganadoresList.isEmpty()) {
@@ -210,11 +214,20 @@ public class ApplicationController implements Serializable {
                     if (!found) {
                         number = gen;
                         continuar = false;
+
+                        if (paseDecena < 4) {
+                            decenaActual = JsfUtil.decenaDeUnEntero(gen);
+                            Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
+                            Integer decenaAleatoria = JsfUtil.getRandomNumber(0, numeroDecenas);
+                            if (decenaActual.equals(decenaAnterior)) {
+                                continuar = true;
+                            }
+                        }
+
                     }
+
                 }
 
-//                decenaActual = JsfUtil.decenaDeUnEntero(gen);
-//                Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
 ////                System.out.println("----------------------------------------------");
 //                System.out.println("Gen (" + gen + ") decena actual (" + decenaActual + ") dec. anterior (" + decenaAnterior + ")");
 //                if (paseDecena == 4) {
@@ -293,12 +306,12 @@ public class ApplicationController implements Serializable {
             ganadoresList.add(gen);
             //Ordena el contador
             decenasList.sort(Comparator.comparingInt(Decenas::getDecena));
-
-            decenasList.get(decenaActual).setContador(decenasList.get(decenaActual).getContador() + 1);
-            System.out.println("=====================DECENAS=========================");
-            for (Decenas d : decenasList) {
-                System.out.println(d.getDecena() + " " + d.getContador());
-            }
+//
+           decenasList.get(decenaActual).setContador(decenasList.get(decenaActual).getContador() + 1);
+//            System.out.println("=====================DECENAS=========================");
+//            for (Decenas d : decenasList) {
+//                System.out.println(d.getDecena() + " " + d.getContador());
+//            }
 
             if (ganadoresList.size() == maximopremios) {
                 JsfUtil.warningDialog("jugar", "Se termino el juego");
