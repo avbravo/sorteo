@@ -5,14 +5,12 @@
  */
 package com.avbravo.template.controller;
 
-import com.avbravo.jmoordb.mongodb.repository.Repository;
 import com.avbravo.jmoordbutils.JsfUtil;
-import com.lowagie.text.pdf.ArabicLigaturizer;
+import com.avbravo.template.entity.Decenas;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
@@ -23,12 +21,16 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class ApplicationController implements Serializable {
-private Integer numerosPendientes =0;
+
+    private Integer numerosPendientes = 0;
     private Boolean iniciado = false;
     private Integer maximoparticipantes = 65;
     private Integer maximopremios = 4;
     private List<Integer> disponiblesList = new ArrayList<>();
     private List<Integer> ganadoresList = new ArrayList<>();
+    private List<Decenas> decenasList = new ArrayList<>();
+    private List<Integer> aleatoriosList = new ArrayList<>();
+    private Integer numeroDecenas = 0;
     Integer numeroGenerado = 0;
 
     public Integer getNumerosPendientes() {
@@ -40,8 +42,22 @@ private Integer numerosPendientes =0;
         this.numerosPendientes = numerosPendientes;
     }
 
-    
-    
+    public List<Decenas> getDecenasList() {
+        return decenasList;
+    }
+
+    public void setDecenasList(List<Decenas> decenasList) {
+        this.decenasList = decenasList;
+    }
+
+    public Integer getNumeroDecenas() {
+        return numeroDecenas;
+    }
+
+    public void setNumeroDecenas(Integer numeroDecenas) {
+        this.numeroDecenas = numeroDecenas;
+    }
+
     public Integer getNumeroGenerado() {
         return numeroGenerado;
     }
@@ -84,16 +100,52 @@ private Integer numerosPendientes =0;
         numeroGenerado = 0;
         disponiblesList = new ArrayList<>();
         ganadoresList = new ArrayList<>();
+        decenasList = new ArrayList<>();
+        aleatoriosList = new ArrayList<>();
         try {
 
             for (int i = 1; i <= maximoparticipantes; i++) {
                 disponiblesList.add(new Integer(i));
 
             }
+            numeroDecenas = JsfUtil.decenaDeUnEntero(maximoparticipantes);
+            for (int i = 0; i <= numeroDecenas; i++) {
+                decenasList.add(new Decenas(i, 0));
+            }
+            Integer numeroAleatorio = 0;
+            Boolean seguir = true;
+            Boolean found=false;
+            for (int i = 1; i <= maximoparticipantes; i++) {
+                seguir=true;
+                while (seguir) {
+                    numeroAleatorio = JsfUtil.getRandomNumber(1, maximoparticipantes);
+                    if (aleatoriosList == null || aleatoriosList.isEmpty()) {
+                        aleatoriosList.add(numeroAleatorio);
+                        seguir=false;
+                    } else {
+                        found=false;
+                        for (Integer n : aleatoriosList) {
+                             if(n.equals(numeroAleatorio)){
+                                 found=true;
+                             }
+                        }
+                        if(!found){
+                             aleatoriosList.add(numeroAleatorio);
+                             seguir=false;
+                        }
+                    }
+                }
+
+            }
+            System.out.println("=============aleatorios==========");
+            for(Integer i:aleatoriosList){
+                System.out.print( i+ " ");
+            }
+
             JsfUtil.infoDialog("Mensaje", "Se preparo el entorno para jugar");
             iniciado = true;
         } catch (Exception e) {
-            JsfUtil.errorDialog("generarListaNumeros()", e.getLocalizedMessage());
+            JsfUtil.errorDialog("iniciar()", e.getLocalizedMessage());
         }
         return "";
 //        return "/faces/pages/index";
@@ -111,13 +163,15 @@ private Integer numerosPendientes =0;
                 return "";
             }
             ganadoresList.forEach((n) -> {
-                numeroGenerado =n;
+                numeroGenerado = n;
             });
-//            System.out.println("size() " + ganadoresList.size());
-          //  numeroGenerado = ganadoresList.get(ganadoresList.size());
+
             ganadoresList.remove(numeroGenerado);
-            System.out.println("remove-->size() " + ganadoresList.size());
+
+            Integer gen = JsfUtil.getRandomNumber(1, maximoparticipantes);
+
             numeroGenerado = 0;
+
             JsfUtil.infoDialog("Removido", "Se removio el ultimo premio jugado");
             return "";
         } catch (Exception e) {
@@ -131,6 +185,8 @@ private Integer numerosPendientes =0;
         Integer number = 0;
         Boolean continuar = true;
         Boolean found = false;
+        Integer paseDecena = 0;
+        Integer decenaActual = 0;
         Integer gen = 0;
         if (ganadoresList.size() == maximopremios) {
             JsfUtil.warningDialog("jugar", "El juego ya finalizo");
@@ -144,6 +200,7 @@ private Integer numerosPendientes =0;
                     number = gen;
                     continuar = false;
                 } else {
+                    //No esta repetido
                     found = false;
                     for (Integer d : ganadoresList) {
                         if (d.equals(gen)) {
@@ -156,10 +213,93 @@ private Integer numerosPendientes =0;
                     }
                 }
 
+//                decenaActual = JsfUtil.decenaDeUnEntero(gen);
+//                Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
+////                System.out.println("----------------------------------------------");
+//                System.out.println("Gen (" + gen + ") decena actual (" + decenaActual + ") dec. anterior (" + decenaAnterior + ")");
+//                if (paseDecena == 4) {
+//                    System.out.println("-------->3 pase");
+//                    continuar = false;
+//                    //Incrementa el contador de decenas
+//
+//                } else {
+//                    if (!decenaActual.equals(decenasList.get(JsfUtil.getRandomNumber(1, numeroDecenas)).getDecena())) {
+//                        System.out.println("..............|a.--> reserved");
+//                        continuar = false;
+//                    } else {
+//                        System.out.println("..............|b.continuar=true |........................");
+//                        continuar = true;
+//                        paseDecena++;
+//                    }
+//
+//                }
+//                //Verifica si se puede asignar a una de las decenas menor
+//                if (decenaActual.equals(decenaAnterior)) {
+//                    if (paseDecena == 3) {
+//                        System.out.println("-------->3 pase");
+//                        continuar = false;
+//                        //Incrementa el contador de decenas
+//
+//                    } else {
+////                        decenasList.sort(Comparator.comparingInt(Decenas::getContador)
+////                        );
+//                        if (decenaActual.equals(decenasList.get(JsfUtil.getRandomNumber(1, numeroDecenas)).getDecena())) {
+//                            System.out.println("..............|a.--> reserved");
+//                            continuar = false;
+//                        } else {
+//                            System.out.println("..............|b.continuar=true |........................");
+//                            continuar = true;
+//                            paseDecena++;
+//                        }
+//
+//                    }
+//
+//                } else {
+//                    //ordena inversamente por contador
+//                    decenasList.sort(Comparator.comparingInt(Decenas::getContador)
+//                    );
+//                    if (decenaActual.equals(decenasList.get(0).getDecena())) {
+//                        System.out.println("-------> (*) continuar=false......");
+//                        continuar = false;
+//                    } else {
+//                        System.out.println("-------->(*) continuar=true");
+//                        continuar = true;
+//                        if (paseDecena == 3) {
+//                            System.out.println("-------->(*) pase=3");
+//                            continuar = false;
+//                            //Incrementa el contador de decenas
+//
+//                        }
+//                    }
+//
+//                }
+//                decenasList.sort(Comparator.comparingInt(Decenas::getContador)
+//                        .reversed());
+//                if (decenaActual.equals(decenasList.get(0).getDecena())) {
+//                    continuar = false;
+//                    paseDecena++;
+//                } else {
+//                    if (paseDecena == 4) {
+//                        System.out.println("-------->3 pase");
+//                        continuar = false;
+//
+//                    }
+//                }
+//                }
             }
             numeroGenerado = gen;
-            // disponiblesList.remove(gen);
+
+            //Verificar las decenas
             ganadoresList.add(gen);
+            //Ordena el contador
+            decenasList.sort(Comparator.comparingInt(Decenas::getDecena));
+
+            decenasList.get(decenaActual).setContador(decenasList.get(decenaActual).getContador() + 1);
+            System.out.println("=====================DECENAS=========================");
+            for (Decenas d : decenasList) {
+                System.out.println(d.getDecena() + " " + d.getContador());
+            }
+
             if (ganadoresList.size() == maximopremios) {
                 JsfUtil.warningDialog("jugar", "Se termino el juego");
                 // iniciado = false;
@@ -174,9 +314,9 @@ private Integer numerosPendientes =0;
 
     public Integer pendientes() {
         try {
-if(ganadoresList == null || ganadoresList.isEmpty()){
-    return maximopremios;
-}
+            if (ganadoresList == null || ganadoresList.isEmpty()) {
+                return maximopremios;
+            }
             return maximopremios - ganadoresList.size();
         } catch (Exception e) {
         }
