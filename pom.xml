@@ -4,7 +4,7 @@
 
     <groupId>com.avbravo</groupId>
     <artifactId>sorteo</artifactId>
-    <version>0.5.3</version>
+    <version>0.6</version>
     <packaging>war</packaging>
 
     <name>sorteo</name>
@@ -122,7 +122,7 @@
         <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordbutils</artifactId>
-            <version>0.44</version>
+            <version>0.45</version>
         </dependency>
         <dependency>
             <groupId>javax.websocket</groupId>

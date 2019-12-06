@@ -117,33 +117,6 @@ public class ApplicationController implements Serializable {
             Integer numeroAleatorio = 0;
             Boolean seguir = true;
             Boolean found = false;
-//            for (int i = 1; i <= maximoparticipantes; i++) {
-//                seguir = true;
-//                while (seguir) {
-//                    numeroAleatorio = JsfUtil.getRandomNumber(1, maximoparticipantes);
-//                    if (aleatoriosList == null || aleatoriosList.isEmpty()) {
-//                        aleatoriosList.add(numeroAleatorio);
-//                        seguir = false;
-//                    } else {
-//                        found = false;
-//                        for (Integer n : aleatoriosList) {
-//                            if (n.equals(numeroAleatorio)) {
-//                                found = true;
-//                            }
-//                        }
-//                        if (!found) {
-//                            aleatoriosList.add(numeroAleatorio);
-//                            seguir = false;
-//                        }
-//                    }
-//                }
-//
-//            }
-            System.out.println("=============aleatorios==========");
-            for (Integer i : aleatoriosList) {
-                System.out.print(i + " ");
-            }
-
             JsfUtil.infoDialog("Mensaje", "Se preparo el entorno para jugar");
             iniciado = true;
         } catch (Exception e) {
@@ -198,9 +171,9 @@ public class ApplicationController implements Serializable {
             while (continuar) {
                 paseDecena++;
 
-//                gen = JsfUtil.getRandomNumber(1, maximoparticipantes);
+                gen = JsfUtil.getRandomNumber(maximoparticipantes + 2, maximoparticipantes * 5);
                 gen = JsfUtil.getRandomNumber(1, maximoparticipantes);
-
+ decenaActual = JsfUtil.decenaDeUnEntero(gen);
                 if (ganadoresList.isEmpty()) {
                     number = gen;
                     continuar = false;
@@ -217,7 +190,7 @@ public class ApplicationController implements Serializable {
                         continuar = false;
 
 //                        if (paseDecena < 3) {
-                        decenaActual = JsfUtil.decenaDeUnEntero(gen);
+                       
 //                        Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
 //                        Integer decenaAleatoria = JsfUtil.getRandomNumber(0, numeroDecenas);
 
@@ -226,22 +199,27 @@ public class ApplicationController implements Serializable {
 //                              continuar=true;
 //                              
 //                        }
+                     //   System.out.println("#" + gen + "  ·------> Decena actual " + decenaActual);
                         Boolean decfound = false;
                         for (Decenas d : decenasList) {
-                            if (d.getDecena().equals(decenaActual) && d.getContador()>0) {
+                            if (d.getDecena().equals(decenaActual) && d.getContador() > 0) {
                                 decfound = true;
                                 break;
 
                             }
                         }
-                        if(decfound ){
-                            System.out.println("encontro decena para "+gen + " intentos "+paseDecena);
-                            if( paseDecena < 10){
-                                continuar=true; 
+                        if (decfound) {
+                       //     System.out.println("---------->encontro decena para " + gen + " intentos " + paseDecena);
+                            if (paseDecena < maximoparticipantes) {
+
+                                continuar = true;
+                            } else {
+                           //     System.out.println("...........else");
+                                continuar = false;
                             }
-                           
-                        }else{
-                            System.out.println(" no encontro decena para "+gen);
+
+                        } else {
+                          //  System.out.println("------------->no encontro decena para " + gen);
                         }
 
                     }
@@ -325,8 +303,9 @@ public class ApplicationController implements Serializable {
             //Verificar las decenas
             ganadoresList.add(gen);
             //Ordena el contador
-            decenasList.sort(Comparator.comparingInt(Decenas::getDecena));
+            // decenasList.sort(Comparator.comparingInt(Decenas::getDecena));
 //
+          //  System.out.println(".....voy a insertar en la posiciion " + decenaActual);
             decenasList.get(decenaActual).setContador(decenasList.get(decenaActual).getContador() + 1);
 //            System.out.println("=====================DECENAS=========================");
 //            for (Decenas d : decenasList) {
