@@ -218,13 +218,30 @@ public class ApplicationController implements Serializable {
 
 //                        if (paseDecena < 3) {
                         decenaActual = JsfUtil.decenaDeUnEntero(gen);
-                        Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
-                        Integer decenaAleatoria = JsfUtil.getRandomNumber(0, numeroDecenas);
+//                        Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
+//                        Integer decenaAleatoria = JsfUtil.getRandomNumber(0, numeroDecenas);
 
-                        if ((decenaActual.equals(decenaAnterior) || decenaActual.equals(decenaAleatoria) ||decenaAnterior.equals(decenaAleatoria))&& paseDecena <4) {
-                            System.out.println("-..... aleatorio,,,,,");
-                              continuar=true;
-                              
+//                        if ((decenaActual.equals(decenaAnterior) || decenaActual.equals(decenaAleatoria) ||decenaAnterior.equals(decenaAleatoria))&& paseDecena <4) {
+//                            System.out.println("-..... aleatorio,,,,,");
+//                              continuar=true;
+//                              
+//                        }
+                        Boolean decfound = false;
+                        for (Decenas d : decenasList) {
+                            if (d.getDecena().equals(decenaActual) && d.getContador()>0) {
+                                decfound = true;
+                                break;
+
+                            }
+                        }
+                        if(decfound ){
+                            System.out.println("encontro decena para "+gen + " intentos "+paseDecena);
+                            if( paseDecena < 10){
+                                continuar=true; 
+                            }
+                           
+                        }else{
+                            System.out.println(" no encontro decena para "+gen);
                         }
 
                     }
