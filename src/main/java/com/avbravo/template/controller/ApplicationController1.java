@@ -8,11 +8,12 @@ package com.avbravo.template.controller;
 import com.avbravo.jmoordbutils.JsfUtil;
 import com.avbravo.template.entity.Decenas;
 import java.io.Serializable;
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
@@ -22,7 +23,7 @@ import javax.inject.Named;
  */
 @Named
 @ApplicationScoped
-public class ApplicationController implements Serializable {
+public class ApplicationController1 implements Serializable {
 
     private Integer numerosPendientes = 0;
     private Boolean iniciado = false;
@@ -117,31 +118,31 @@ public class ApplicationController implements Serializable {
             Integer numeroAleatorio = 0;
             Boolean seguir = true;
             Boolean found = false;
-//            for (int i = 1; i <= maximoparticipantes; i++) {
-//                seguir = true;
-//                while (seguir) {
-//                    numeroAleatorio = JsfUtil.getRandomNumber(1, maximoparticipantes);
-//                    if (aleatoriosList == null || aleatoriosList.isEmpty()) {
-//                        aleatoriosList.add(numeroAleatorio);
-//                        seguir = false;
-//                    } else {
-//                        found = false;
-//                        for (Integer n : aleatoriosList) {
-//                            if (n.equals(numeroAleatorio)) {
-//                                found = true;
-//                            }
-//                        }
-//                        if (!found) {
-//                            aleatoriosList.add(numeroAleatorio);
-//                            seguir = false;
-//                        }
-//                    }
-//                }
-//
-//            }
+            for (int i = 1; i <= maximoparticipantes; i++) {
+                seguir = true;
+                while (seguir) {
+                    numeroAleatorio = JsfUtil.getRandomNumber(1, maximoparticipantes);
+                    if (aleatoriosList == null || aleatoriosList.isEmpty()) {
+                        aleatoriosList.add(numeroAleatorio);
+                        seguir = false;
+                    } else {
+                        found = false;
+                        for (Integer n : aleatoriosList) {
+                            if (n.equals(numeroAleatorio)) {
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            aleatoriosList.add(numeroAleatorio);
+                            seguir = false;
+                        }
+                    }
+                }
+
+            }
             System.out.println("=============aleatorios==========");
             for (Integer i : aleatoriosList) {
-                System.out.print(i + " ");
+                System.out.println(i + " ");
             }
 
             JsfUtil.infoDialog("Mensaje", "Se preparo el entorno para jugar");
@@ -198,9 +199,7 @@ public class ApplicationController implements Serializable {
             while (continuar) {
                 paseDecena++;
 
-//                gen = JsfUtil.getRandomNumber(1, maximoparticipantes);
                 gen = JsfUtil.getRandomNumber(1, maximoparticipantes);
-
                 if (ganadoresList.isEmpty()) {
                     number = gen;
                     continuar = false;
@@ -216,16 +215,16 @@ public class ApplicationController implements Serializable {
                         number = gen;
                         continuar = false;
 
-//                        if (paseDecena < 3) {
-                        decenaActual = JsfUtil.decenaDeUnEntero(gen);
-                        Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
-                        Integer decenaAleatoria = JsfUtil.getRandomNumber(0, numeroDecenas);
-
-                        if ((decenaActual.equals(decenaAnterior) || decenaActual.equals(decenaAleatoria) ||decenaAnterior.equals(decenaAleatoria))&& paseDecena <4) {
-                            System.out.println("-..... aleatorio,,,,,");
-                              continuar=true;
-                              
-                        }
+//                        if (paseDecena < 4) {
+//                            decenaActual = JsfUtil.decenaDeUnEntero(gen);
+//                            Integer decenaAnterior = JsfUtil.decenaDeUnEntero(numeroGenerado);
+//                            Integer decenaAleatoria = JsfUtil.getRandomNumber(0, numeroDecenas);
+//                            if (decenaActual.equals(decenaAnterior)) {
+//                                continuar = true;
+//                            }
+//                        }else{
+//                            paseDecena=0;
+//                        }
 
                     }
 
@@ -310,7 +309,7 @@ public class ApplicationController implements Serializable {
             //Ordena el contador
             decenasList.sort(Comparator.comparingInt(Decenas::getDecena));
 //
-            decenasList.get(decenaActual).setContador(decenasList.get(decenaActual).getContador() + 1);
+           decenasList.get(decenaActual).setContador(decenasList.get(decenaActual).getContador() + 1);
 //            System.out.println("=====================DECENAS=========================");
 //            for (Decenas d : decenasList) {
 //                System.out.println(d.getDecena() + " " + d.getContador());
@@ -406,15 +405,5 @@ public class ApplicationController implements Serializable {
             JsfUtil.errorDialog("reiniciarParticipantes()", e.getLocalizedMessage());
         }
         return "";
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="getRandomNumber"> 
-    public static Integer getRandomNumberWithSeed(int min, int max) {
-        if (min >= max) {
-            throw new IllegalArgumentException("max must be greater than min");
-        }
-        Random r = new Random(System.currentTimeMillis());
-        // Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
     }
 }
