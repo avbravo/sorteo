@@ -1,6 +1,6 @@
 
 Crear un UberJar
- java -jar /home/avbravo/software/payara/payara-micro-5.193.jar --deploy /home/avbravo/NetBeansProjects/utp/sorteo/target/sorteo.war --outputUberJar /home/avbravo/Descargas/sorteo.jar
+ java -jar /home/avbravo/software/payara/payara-micro-5.193.jar --deploy /home/avbravo/NetBeansProjects/utp/sorteo/sorteo/target/sorteo.war --outputUberJar /home/avbravo/Descargas/sorteo.jar
 
 Ejecutar el jar
 java -jar sorteo.jar
