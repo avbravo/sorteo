@@ -6,4 +6,4 @@ Ejecutar el jar
 java -jar sorteo.jar
 
 Ejecutar War
- java -jar payara-micro-5.193.jar --deploy /home/avbravo/NetBeansProjects/utp/sorteo/target/sorteo.war                     
+ java -jar payara-micro-5.193.jar --deploy /home/avbravo/NetBeansProjects/utp/sorteo/sorteo/target/sorteo.war                     
